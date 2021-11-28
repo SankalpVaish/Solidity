@@ -1,0 +1,47 @@
+pragma solidity >=0.4.0 < 0.6.0;
+
+contract prop_transfer{
+    struct property{
+        uint256 floor;
+        
+        uint256 cost;
+        string name;
+        
+    }
+    address _add;
+    uint256 id;
+    mapping(uint256=>address) prop;
+    mapping(uint256=>property) pr;
+    
+
+    
+    constructor() public{
+        _add= msg.sender;
+        id=0;
+    }
+    function add_prop(string memory n, uint256 c, uint256 f) public{
+        id=id+1;
+        pr[id].floor=f;
+        pr[id].name=n;
+        pr[id].cost=c;
+        prop[id]=_add;
+
+    }
+    
+    function show_property(uint i) public view returns(string memory){
+        return pr[i].name;
+    }
+
+    function sell(string memory n, address a, uint256 i) public returns(uint256){
+        if (msg.sender==prop[i]){
+            prop[i]=a;
+            pr[id].name=n;
+            return id;
+        }
+        else{
+            revert("Only owner can sell");
+        }
+    }
+
+
+}
