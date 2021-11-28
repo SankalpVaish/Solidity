@@ -1,0 +1,23 @@
+pragma solidity >=0.4.0 < 0.6.0;
+
+contract vote{
+    uint256 v;
+    mapping(address=>bool) voted;
+    
+    constructor() public{
+        v=0;
+    }
+    
+    function cast_vote() public{
+        if (voted[msg.sender]==true){
+            revert("Already voted");
+        }
+        else{
+            v=v+1;
+            voted[msg.sender]=true;
+        }
+    }
+    function get_vote() public view returns(uint256){
+        return v;
+    }
+}
